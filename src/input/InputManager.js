@@ -204,7 +204,8 @@ export class InputManager {
       { name: 'mk', label: 'MK', col: 1, row: 1, color: 0xFFC300 },
       { name: 'hk', label: 'HK', col: 2, row: 1, color: 0xFFC300 },
       // Dedicated Shortcuts: Special & Super (Cyan & Gold)
-      { name: 'special1', label: 'SPL', col: 3, row: 0, color: 0x00CCFF, size: 24 },
+      { name: 'special1', label: 'SP1', col: 3, row: 0, color: 0x00CCFF, size: 24 },
+      { name: 'special4', label: 'SP2', col: 4, row: 0, color: 0x00AADD, size: 24 },
       { name: 'superMove', label: 'SPR', col: 3, row: 1, color: 0xFFD700, size: 24 }
     ];
     

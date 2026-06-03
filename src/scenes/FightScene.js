@@ -260,6 +260,20 @@ export class FightScene extends Phaser.Scene {
     this.p1.update(p1Input, this.p2);
     this.p2.update(p2Input, this.p1);
 
+    // Handle special move signal effects (explosion, shockwave particles)
+    [this.p1, this.p2].forEach(fighter => {
+      if (fighter.explosionSignal) {
+        this.particles.spawnExplosionEffect(fighter.x + 30 * fighter.facing, fighter.y - 50);
+        this.shakeIntensity = 10;
+        fighter.explosionSignal = false;
+      }
+      if (fighter.shockwaveSignal) {
+        this.particles.spawnShockwaveEffect(fighter.x, fighter.y);
+        this.shakeIntensity = 6;
+        fighter.shockwaveSignal = false;
+      }
+    });
+
     this._handlePushCollision();
     this._checkHits();
     this._checkProjectileHits();
@@ -339,7 +353,7 @@ export class FightScene extends Phaser.Scene {
     }
 
     const isSuper   = attacker.state === States.SUPER;
-    const isSpecial = [States.SPECIAL1, States.SPECIAL2, States.SPECIAL3].includes(attacker.state);
+    const isSpecial = [States.SPECIAL1, States.SPECIAL2, States.SPECIAL3, States.SPECIAL4].includes(attacker.state);
     const isHeavy   = [States.HEAVY_PUNCH, States.HEAVY_KICK].includes(attacker.state);
 
     // ── HIT ───────────────────────────────────────────────────────────────

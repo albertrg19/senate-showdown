@@ -24,6 +24,7 @@ export class AIController {
       special1: false,
       special2: false,
       special3: false,
+      special4: false,
       superMove: false
     };
   }
@@ -51,6 +52,7 @@ export class AIController {
       persistentInput.special1 = false;
       persistentInput.special2 = false;
       persistentInput.special3 = false;
+      persistentInput.special4 = false;
       persistentInput.superMove = false;
       return persistentInput;
     }
@@ -114,6 +116,9 @@ export class AIController {
           input.hp = true; // Bad Boy Haymaker
         } else if (rand < 0.9) {
           input.hk = true; // Federalism Dropkick
+        } else if (rand < 0.85) {
+          // Special 4: Pistolero Blast (close-range explosive)
+          input.special4 = true;
         } else {
           // Special 3: Action Star Rush (slide punch forward)
           input.special3 = true;
@@ -178,8 +183,10 @@ export class AIController {
       // Zoning range (perfect for Kiko)
       else if (absDx >= 140 && absDx <= 280) {
         const rand = Math.random();
-        if (rand < 0.45) {
+        if (rand < 0.35) {
           input.special1 = true; // GOODBYE GUTOM (Veggie Projectile)
+        } else if (rand < 0.55) {
+          input.special4 = true; // BATAS NG BAYAN (Ground shockwave)
         } else if (rand < 0.75) {
           input[backwardKey] = true; // Keep maintaining distance
         } else {

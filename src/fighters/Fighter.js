@@ -22,6 +22,7 @@ export const States = {
   SPECIAL1: 'special1',
   SPECIAL2: 'special2',
   SPECIAL3: 'special3',
+  SPECIAL4: 'special4',
   SUPER: 'super',
   HIT_STUN: 'hitStun',
   BLOCK_STUN: 'blockStun',
@@ -325,6 +326,9 @@ export class Fighter {
       case States.SPECIAL3:
         this.handleAttackState(this.data.moves.special3, input);
         break;
+      case States.SPECIAL4:
+        this.handleAttackState(this.data.moves.special4, input);
+        break;
       case States.SUPER:
         this.isInvincible = this.stateFrame < (this.data.moves.super?.frames?.startup || 20);
         this.handleAttackState(this.data.moves.super, input);
@@ -402,6 +406,8 @@ export class Fighter {
       this.setState(States.SPECIAL1);
     } else if (input.special3) {
       this.setState(States.SPECIAL3);
+    } else if (input.special4) {
+      this.setState(States.SPECIAL4);
     } else if (input.up) {
       if (input.forward) this.startJump(1);
       else if (input.backward) this.startJump(-1);
@@ -434,6 +440,7 @@ export class Fighter {
     } else if (input.special2) this.setState(States.SPECIAL2);
     else if (input.special1) this.setState(States.SPECIAL1);
     else if (input.special3) this.setState(States.SPECIAL3);
+    else if (input.special4) this.setState(States.SPECIAL4);
     else if (input.up) this.startJump(1);
     else if (input.hp) this.setState(States.HEAVY_PUNCH);
     else if (input.mp) this.setState(States.MEDIUM_PUNCH);
@@ -481,12 +488,13 @@ export class Fighter {
     if (moveData.cancelable && frame >= startup && frame < startup + active + (moveData.cancelWindow || 4)) {
       this.inCancelWindow = true;
       // Check for special move inputs during cancel window
-      if (input && (input.special1 || input.special2 || input.special3)) {
+      if (input && (input.special1 || input.special2 || input.special3 || input.special4)) {
         this.hitConnected = false;
         this.hurtbox = { x: -25, y: -80, w: 50, h: 80 };
         if (input.special1) this.setState(States.SPECIAL1);
         else if (input.special2) this.setState(States.SPECIAL2);
         else if (input.special3) this.setState(States.SPECIAL3);
+        else if (input.special4) this.setState(States.SPECIAL4);
         return;
       }
     }
@@ -620,7 +628,7 @@ export class Fighter {
       States.LIGHT_PUNCH, States.MEDIUM_PUNCH, States.HEAVY_PUNCH,
       States.LIGHT_KICK, States.MEDIUM_KICK, States.HEAVY_KICK,
       States.CROUCH_PUNCH, States.CROUCH_KICK, States.JUMP_PUNCH, States.JUMP_KICK,
-      States.SPECIAL1, States.SPECIAL2, States.SPECIAL3, States.SUPER,
+      States.SPECIAL1, States.SPECIAL2, States.SPECIAL3, States.SPECIAL4, States.SUPER,
       States.HIT_STUN, States.BLOCK_STUN, States.KNOCKDOWN, States.GETUP, States.DIZZY
     ].includes(this.state);
   }
@@ -630,7 +638,7 @@ export class Fighter {
       States.LIGHT_PUNCH, States.MEDIUM_PUNCH, States.HEAVY_PUNCH,
       States.LIGHT_KICK, States.MEDIUM_KICK, States.HEAVY_KICK,
       States.CROUCH_PUNCH, States.CROUCH_KICK, States.JUMP_PUNCH, States.JUMP_KICK,
-      States.SPECIAL1, States.SPECIAL2, States.SPECIAL3, States.SUPER
+      States.SPECIAL1, States.SPECIAL2, States.SPECIAL3, States.SPECIAL4, States.SUPER
     ].includes(this.state);
   }
 

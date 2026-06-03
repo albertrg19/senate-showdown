@@ -113,6 +113,7 @@ export class FighterRenderer {
       case States.CROUCH_KICK:
       case States.JUMP_KICK:
       case States.SPECIAL2:
+      case States.SPECIAL4:
         animKey = prefix + 'kick';
         break;
 
@@ -156,7 +157,7 @@ export class FighterRenderer {
 
     // Draw active energy glow
     const g = this.graphics;
-    if (fighter.isAttacking() && (state === States.SPECIAL1 || state === States.SPECIAL2 || state === States.SPECIAL3)) {
+    if (fighter.isAttacking() && (state === States.SPECIAL1 || state === States.SPECIAL2 || state === States.SPECIAL3 || state === States.SPECIAL4)) {
       g.lineStyle(3, data.energyColor, 0.4 + Math.sin(fighter.stateFrame * 0.3) * 0.3);
       g.strokeCircle(x, y - 40, 50 + Math.sin(fighter.stateFrame * 0.2) * 10);
     }
@@ -220,6 +221,30 @@ export class FighterRenderer {
     } else if (proj.type === 'vegetable2') {
       g.fillStyle(0x8B4513, 0.9);
       g.fillEllipse(proj.x, proj.y, 18, 12);
+    } else if (proj.type === 'shockwave') {
+      // Green ground-traveling energy wave
+      const pulse = Math.sin(t * 3) * 0.15;
+      g.fillStyle(0x2D6A4F, 0.7 + pulse);
+      g.fillRoundedRect(proj.x - 25, proj.y - 8, 50, 16, 4);
+      g.fillStyle(0x40916C, 0.5 + pulse);
+      g.fillRoundedRect(proj.x - 20, proj.y - 5, 40, 10, 3);
+      g.fillStyle(0x95D5B2, 0.4);
+      g.fillRoundedRect(proj.x - 15, proj.y - 3, 30, 6, 2);
+      // Energy sparks on top
+      g.fillStyle(0xFFFFFF, 0.3 + pulse);
+      g.fillCircle(proj.x - 10 + Math.sin(t * 5) * 8, proj.y - 10, 3);
+      g.fillCircle(proj.x + 5 + Math.cos(t * 4) * 6, proj.y - 12, 2);
+    } else if (proj.type === 'explosion') {
+      // Red/orange close-range blast
+      const blastPulse = Math.sin(t * 5) * 0.2;
+      g.fillStyle(0xE63946, 0.8 + blastPulse);
+      g.fillCircle(proj.x, proj.y, 20);
+      g.fillStyle(0xFF6B35, 0.6);
+      g.fillCircle(proj.x, proj.y, 14);
+      g.fillStyle(0xFFD700, 0.5);
+      g.fillCircle(proj.x, proj.y, 8);
+      g.fillStyle(0xFFFFFF, 0.4);
+      g.fillCircle(proj.x, proj.y, 4);
     }
   }
 

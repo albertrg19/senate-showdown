@@ -262,6 +262,111 @@ export class ParticleEffects {
     }
   }
 
+  // Robin's Pistolero Blast — close-range red/orange/gold explosion burst
+  spawnExplosionEffect(x, y) {
+    // Outer ring of fiery particles
+    for (let i = 0; i < 20; i++) {
+      const angle = (Math.PI * 2 / 20) * i;
+      const speed = 4 + Math.random() * 8;
+      this.particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 4 + Math.random() * 6,
+        life: 1,
+        decay: 0.025,
+        color: [0xE63946, 0xFF6B35, 0xFFD700][Math.floor(Math.random() * 3)],
+        gravity: 0.05,
+        shape: Math.random() > 0.4 ? 'circle' : 'rect',
+        shrink: 0.95
+      });
+    }
+    // Central bright flash
+    for (let i = 0; i < 6; i++) {
+      this.particles.push({
+        x: x + (Math.random() - 0.5) * 15,
+        y: y + (Math.random() - 0.5) * 15,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        size: 15 + Math.random() * 10,
+        life: 1,
+        decay: 0.12,
+        color: 0xFFFFFF,
+        shape: 'circle',
+        shrink: 0.88
+      });
+    }
+    // Smoke puffs
+    for (let i = 0; i < 8; i++) {
+      this.particles.push({
+        x: x + (Math.random() - 0.5) * 30,
+        y: y,
+        vx: (Math.random() - 0.5) * 3,
+        vy: -2 - Math.random() * 4,
+        size: 6 + Math.random() * 8,
+        life: 0.8,
+        decay: 0.015,
+        color: 0x333333,
+        gravity: -0.02,
+        shape: 'circle',
+        shrink: 1.03
+      });
+    }
+  }
+
+  // Kiko's Batas ng Bayan — green ground-ripple shockwave particles
+  spawnShockwaveEffect(x, y) {
+    // Ground-level green energy burst
+    for (let i = 0; i < 14; i++) {
+      const spread = (Math.random() - 0.5) * Math.PI * 0.4;
+      const speed = 3 + Math.random() * 5;
+      this.particles.push({
+        x, y,
+        vx: Math.cos(spread) * speed * (Math.random() > 0.5 ? 1 : -1),
+        vy: -1 - Math.random() * 3,
+        size: 3 + Math.random() * 4,
+        life: 1,
+        decay: 0.03,
+        color: [0x2D6A4F, 0x40916C, 0x95D5B2, 0xFCD116][Math.floor(Math.random() * 4)],
+        gravity: 0.08,
+        shape: Math.random() > 0.3 ? 'rect' : 'circle',
+        shrink: 0.97
+      });
+    }
+    // Ground crack lines (horizontal streaks)
+    for (let i = 0; i < 6; i++) {
+      this.particles.push({
+        x: x + (Math.random() - 0.5) * 60,
+        y: y + Math.random() * 5,
+        vx: (Math.random() - 0.5) * 8,
+        vy: 0,
+        size: 2 + Math.random() * 3,
+        life: 0.7,
+        decay: 0.04,
+        color: 0xFCD116,
+        shape: 'rect',
+        shrink: 0.96,
+        gravity: 0
+      });
+    }
+    // Dust cloud at stomp point
+    for (let i = 0; i < 5; i++) {
+      this.particles.push({
+        x: x + (Math.random() - 0.5) * 20,
+        y: y,
+        vx: (Math.random() - 0.5) * 2,
+        vy: -Math.random() * 2,
+        size: 5 + Math.random() * 5,
+        life: 0.5,
+        decay: 0.02,
+        color: 0x8B7355,
+        gravity: 0,
+        shape: 'circle',
+        shrink: 1.02
+      });
+    }
+  }
+
   destroy() {
     this.graphics.destroy();
   }
