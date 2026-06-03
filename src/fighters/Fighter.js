@@ -35,7 +35,8 @@ export const States = {
 
 // Base Fighter class
 export class Fighter {
-  constructor(x, y, facing, characterData) {
+  constructor(id, x, y, facing, characterData) {
+    this.id = id;
     this.x = x;
     this.y = y;
     this.velX = 0;
@@ -114,7 +115,9 @@ export class Fighter {
   getWorldHitbox() {
     if (!this.activeHitbox) return null;
     return {
-      x: this.x + this.activeHitbox.x * this.facing,
+      x: this.facing === 1
+        ? this.x + this.activeHitbox.x
+        : this.x - this.activeHitbox.x - this.activeHitbox.w,
       y: this.y + this.activeHitbox.y,
       w: this.activeHitbox.w,
       h: this.activeHitbox.h,

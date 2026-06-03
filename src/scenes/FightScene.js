@@ -45,8 +45,8 @@ export class FightScene extends Phaser.Scene {
     this.gameMode = this.registry.get('gameMode') || 'local';
 
     // Fighters
-    this.p1 = new Fighter(280, GROUND_Y,  1, CHARACTER_DATA[p1Char]);
-    this.p2 = new Fighter(680, GROUND_Y, -1, CHARACTER_DATA[p2Char]);
+    this.p1 = new Fighter('p1', 280, GROUND_Y,  1, CHARACTER_DATA[p1Char]);
+    this.p2 = new Fighter('p2', 680, GROUND_Y, -1, CHARACTER_DATA[p2Char]);
     this.fighterRenderer.createFaceSprite(this.p1, this.p1.data.faceKey);
     this.fighterRenderer.createFaceSprite(this.p2, this.p2.data.faceKey);
 
@@ -106,11 +106,39 @@ export class FightScene extends Phaser.Scene {
   // ─── Round intro ────────────────────────────────────────────────────────
   startRoundIntro() {
     this.fightState = FIGHT_STATES.ROUND_INTRO;
-    this.p1.reset(280);
-    this.p2.reset(680);
+    this.p1.reset(-50);
+    this.p2.reset(1010);
+
+    // Set walking states so they animate walking in
+    this.p1.setState(States.WALK_F);
+    this.p2.setState(States.WALK_F);
+
+    this.p1.facing = 1;
+    this.p2.facing = -1;
+
     this.roundTimer   = ROUND_TIME;
     this.p1TookDamage = false;
     this.p2TookDamage = false;
+
+    // Slide them in smoothly
+    this.tweens.add({
+      targets: this.p1,
+      x: 280,
+      duration: 1200,
+      ease: 'Cubic.easeOut',
+      onComplete: () => {
+        this.p1.setState(States.IDLE);
+      }
+    });
+    this.tweens.add({
+      targets: this.p2,
+      x: 680,
+      duration: 1200,
+      ease: 'Cubic.easeOut',
+      onComplete: () => {
+        this.p2.setState(States.IDLE);
+      }
+    });
 
     this.time.delayedCall(300, () => {
       if (this.sound_mgr) this.sound_mgr.playRoundStart();
@@ -148,7 +176,12 @@ export class FightScene extends Phaser.Scene {
 
     switch (this.fightState) {
       case FIGHT_STATES.ROUND_INTRO:
-        // Fighters stand idle during countdown — still render, no input
+        // Increment animation timers manually so they walk/animate during entry
+        this.p1.stateFrame++;
+        this.p1.animTimer++;
+        this.p2.stateFrame++;
+        this.p2.animTimer++;
+
         this.fighterRenderer.clear();
         this.fighterRenderer.draw(this.p1);
         this.fighterRenderer.draw(this.p2);

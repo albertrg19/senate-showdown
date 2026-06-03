@@ -56,11 +56,11 @@ export class FighterRenderer {
     sprite.setScale(0.85); // Perfect arcade size scale for 128x205 frames
     sprite.setDepth(15);
 
-    this.sprites[fighter.name] = sprite;
+    this.sprites[fighter.id] = sprite;
   }
 
   draw(fighter) {
-    const sprite = this.sprites[fighter.name];
+    const sprite = this.sprites[fighter.id];
     if (!sprite) return;
 
     const { x, y, facing, state, data } = fighter;
