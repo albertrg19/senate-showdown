@@ -85,6 +85,19 @@ export class SoundManager {
     setTimeout(() => this._playTone(700, 0.1, 'square', 0.06), 100);
   }
 
+  playBuzzer() {
+    if (!this.initialized || this.muted) return;
+    this._playTone(150, 0.25, 'sawtooth', 0.15);
+    this._playTone(145, 0.25, 'sawtooth', 0.15);
+  }
+
+  playCinematicHit() {
+    if (!this.initialized || this.muted) return;
+    this._playNoise(0.5, 300, 0.35);
+    this._playTone(80, 0.4, 'sawtooth', 0.25);
+    this._playTone(50, 0.3, 'sine', 0.3);
+  }
+
   playVictory() {
     if (!this.initialized || this.muted) return;
     const notes = [523, 659, 784, 1047];

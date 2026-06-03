@@ -6,6 +6,7 @@ import { FightScene } from './scenes/FightScene.js';
 import { VictoryScene } from './scenes/VictoryScene.js';
 import { LobbyScene } from './scenes/LobbyScene.js';
 import { OnlineCharSelectScene } from './scenes/OnlineCharSelectScene.js';
+import { VSScene } from './scenes/VSScene.js';
 
 const config = {
   type: Phaser.CANVAS,
@@ -24,7 +25,7 @@ const config = {
       debug: false
     }
   },
-  scene: [BootScene, MenuScene, CharacterSelectScene, FightScene, VictoryScene, LobbyScene, OnlineCharSelectScene],
+  scene: [BootScene, MenuScene, CharacterSelectScene, VSScene, FightScene, VictoryScene, LobbyScene, OnlineCharSelectScene],
   render: {
     pixelArt: false,
     antialias: true
