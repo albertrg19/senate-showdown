@@ -333,7 +333,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     this.p1Panel.add(this.p1StatsBar);
 
     this.p1StatusBg = this.add.graphics();
-    this.p1StatusTxt = this.add.text(140, 110, 'SELECTING', {
+    this.p1StatusTxt = this.add.text(130, 35, 'SELECTING', {
       fontFamily: 'Orbitron', fontSize: '16px', fontStyle: 'bold', color: '#FFF'
     }).setOrigin(0.5);
     this.p1Panel.add([this.p1StatusBg, this.p1StatusTxt]);
@@ -364,7 +364,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     this.p2Panel.add(this.p2StatsBar);
 
     this.p2StatusBg = this.add.graphics();
-    this.p2StatusTxt = this.add.text(140, 110, 'SELECTING', {
+    this.p2StatusTxt = this.add.text(130, 35, 'SELECTING', {
       fontFamily: 'Orbitron', fontSize: '16px', fontStyle: 'bold', color: '#FFF'
     }).setOrigin(0.5);
     this.p2Panel.add([this.p2StatusBg, this.p2StatusTxt]);
@@ -423,16 +423,16 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     const p1Scale = Math.min(230 / this.p1Portrait.width, 220 / this.p1Portrait.height);
     if (this.p1Confirmed) {
       p1SBg.fillStyle(0xE63946, 0.95);
-      p1SBg.fillRoundedRect(40, 95, 200, 30, 4);
+      p1SBg.fillRoundedRect(30, 20, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0xffffff, 0.8);
-      p1SBg.strokeRoundedRect(40, 95, 200, 30, 4);
+      p1SBg.strokeRoundedRect(30, 20, 200, 30, 4);
       this.p1StatusTxt.setText('READY!').setColor('#FFF');
       this.p1Portrait.setScale(p1Scale * 1.08);
     } else {
       p1SBg.fillStyle(0x13131a, 0.8);
-      p1SBg.fillRoundedRect(40, 95, 200, 30, 4);
+      p1SBg.fillRoundedRect(30, 20, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0x444, 0.5);
-      p1SBg.strokeRoundedRect(40, 95, 200, 30, 4);
+      p1SBg.strokeRoundedRect(30, 20, 200, 30, 4);
       this.p1StatusTxt.setText(this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#E63946');
       this.p1Portrait.setScale(p1Scale);
     }
@@ -487,16 +487,16 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     const p2Scale = Math.min(230 / this.p2Portrait.width, 220 / this.p2Portrait.height);
     if (this.p2Confirmed) {
       p2SBg.fillStyle(0x0038A8, 0.95);
-      p2SBg.fillRoundedRect(40, 95, 200, 30, 4);
+      p2SBg.fillRoundedRect(30, 20, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0xffffff, 0.8);
-      p2SBg.strokeRoundedRect(40, 95, 200, 30, 4);
+      p2SBg.strokeRoundedRect(30, 20, 200, 30, 4);
       this.p2StatusTxt.setText('READY!').setColor('#FFF');
       this.p2Portrait.setScale(p2Scale * 1.08);
     } else {
       p2SBg.fillStyle(0x13131a, 0.8);
-      p2SBg.fillRoundedRect(40, 95, 200, 30, 4);
+      p2SBg.fillRoundedRect(30, 20, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0x444, 0.5);
-      p2SBg.strokeRoundedRect(40, 95, 200, 30, 4);
+      p2SBg.strokeRoundedRect(30, 20, 200, 30, 4);
       this.p2StatusTxt.setText(!this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#FFC300');
       this.p2Portrait.setScale(p2Scale);
     }
