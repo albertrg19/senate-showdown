@@ -211,7 +211,7 @@ export class CharacterSelectScene extends Phaser.Scene {
       const cx = this.gridStartX + col * (this.cellW + this.cellSpacing);
       const cy = this.gridStartY + row * (this.cellH + this.cellSpacing);
 
-      const cellContainer = this.add.container(cx, cy);
+      const cellContainer = this.add.container(cx, cy).setDepth(2);
 
       // Card Background
       const bg = this.add.graphics();
@@ -312,8 +312,7 @@ export class CharacterSelectScene extends Phaser.Scene {
     this.p1Panel.add(this.p1BackGlow);
 
     // Large Portrait
-    this.p1Portrait = this.add.image(140, 180, 'robin_portrait');
-    this.p1Portrait.setScale(0.72);
+    this.p1Portrait = this.add.image(130, 180, 'robin_portrait').setDepth(1);
     this.p1Portrait.setOrigin(0.5);
     this.p1Panel.add(this.p1Portrait);
 
@@ -355,8 +354,7 @@ export class CharacterSelectScene extends Phaser.Scene {
     this.p2Panel.add(this.p2BackGlow);
 
     // Large Portrait (flipped)
-    this.p2Portrait = this.add.image(140, 180, 'kiko_portrait');
-    this.p2Portrait.setScale(0.72);
+    this.p2Portrait = this.add.image(150, 180, 'kiko_portrait').setDepth(1);
     this.p2Portrait.setOrigin(0.5);
     this.p2Portrait.setFlipX(true);
     this.p2Panel.add(this.p2Portrait);
@@ -452,20 +450,21 @@ export class CharacterSelectScene extends Phaser.Scene {
     // Update Status Tag
     const sBg = this.p1StatusBg;
     sBg.clear();
+    const p1Scale = Math.min(230 / this.p1Portrait.width, 220 / this.p1Portrait.height);
     if (this.p1Confirmed) {
       sBg.fillStyle(0xE63946, 0.95);
       sBg.fillRoundedRect(40, 95, 200, 30, 4);
       sBg.lineStyle(1.5, 0xFFFFFF, 0.8);
       sBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p1StatusTxt.setText('READY!').setColor('#FFF');
-      this.p1Portrait.setScale(0.75); // Pop forward!
+      this.p1Portrait.setScale(p1Scale * 1.08); // Pop forward!
     } else {
       sBg.fillStyle(0x13131a, 0.8);
       sBg.fillRoundedRect(40, 95, 200, 30, 4);
       sBg.lineStyle(1.5, 0x444, 0.5);
       sBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p1StatusTxt.setText('SELECTING').setColor('#E63946');
-      this.p1Portrait.setScale(0.7);
+      this.p1Portrait.setScale(p1Scale);
     }
   }
 
@@ -535,20 +534,21 @@ export class CharacterSelectScene extends Phaser.Scene {
     // Update Status Tag
     const sBg = this.p2StatusBg;
     sBg.clear();
+    const p2Scale = Math.min(230 / this.p2Portrait.width, 220 / this.p2Portrait.height);
     if (this.p2Confirmed) {
       sBg.fillStyle(0x0038A8, 0.95); // Blue ready
       sBg.fillRoundedRect(40, 95, 200, 30, 4);
       sBg.lineStyle(1.5, 0xFFFFFF, 0.8);
       sBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p2StatusTxt.setText('READY!').setColor('#FFF');
-      this.p2Portrait.setScale(0.75);
+      this.p2Portrait.setScale(p2Scale * 1.08);
     } else {
       sBg.fillStyle(0x13131a, 0.8);
       sBg.fillRoundedRect(40, 95, 200, 30, 4);
       sBg.lineStyle(1.5, 0x444, 0.5);
       sBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p2StatusTxt.setText('SELECTING').setColor('#FFC300');
-      this.p2Portrait.setScale(0.7);
+      this.p2Portrait.setScale(p2Scale);
     }
   }
 

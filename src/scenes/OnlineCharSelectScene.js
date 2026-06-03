@@ -229,7 +229,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
       const cx = this.gridStartX + col * (this.cellW + this.cellSpacing);
       const cy = this.gridStartY + row * (this.cellH + this.cellSpacing);
 
-      const cellContainer = this.add.container(cx, cy);
+      const cellContainer = this.add.container(cx, cy).setDepth(2);
 
       // Card Background
       const bg = this.add.graphics();
@@ -314,7 +314,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     this.p1BackGlow = this.add.graphics();
     this.p1Panel.add(this.p1BackGlow);
 
-    this.p1Portrait = this.add.image(140, 180, 'robin_portrait').setScale(0.72).setOrigin(0.5);
+    this.p1Portrait = this.add.image(130, 180, 'robin_portrait').setOrigin(0.5).setDepth(1);
     this.p1Panel.add(this.p1Portrait);
 
     this.p1Name = this.add.text(35, 290, 'ROBIN PADILLA', {
@@ -345,7 +345,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     this.p2BackGlow = this.add.graphics();
     this.p2Panel.add(this.p2BackGlow);
 
-    this.p2Portrait = this.add.image(140, 180, 'kiko_portrait').setScale(0.72).setOrigin(0.5).setFlipX(true);
+    this.p2Portrait = this.add.image(150, 180, 'kiko_portrait').setOrigin(0.5).setFlipX(true).setDepth(1);
     this.p2Panel.add(this.p2Portrait);
 
     this.p2Name = this.add.text(35, 290, 'KIKO PANGILINAN', {
@@ -420,20 +420,21 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     // P1 Status Ready Box
     const p1SBg = this.p1StatusBg;
     p1SBg.clear();
+    const p1Scale = Math.min(230 / this.p1Portrait.width, 220 / this.p1Portrait.height);
     if (this.p1Confirmed) {
       p1SBg.fillStyle(0xE63946, 0.95);
       p1SBg.fillRoundedRect(40, 95, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0xffffff, 0.8);
       p1SBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p1StatusTxt.setText('READY!').setColor('#FFF');
-      this.p1Portrait.setScale(0.75);
+      this.p1Portrait.setScale(p1Scale * 1.08);
     } else {
       p1SBg.fillStyle(0x13131a, 0.8);
       p1SBg.fillRoundedRect(40, 95, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0x444, 0.5);
       p1SBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p1StatusTxt.setText(this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#E63946');
-      this.p1Portrait.setScale(0.7);
+      this.p1Portrait.setScale(p1Scale);
     }
 
     // ── P2 Panel ──
@@ -483,20 +484,21 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     // P2 Status Ready Box
     const p2SBg = this.p2StatusBg;
     p2SBg.clear();
+    const p2Scale = Math.min(230 / this.p2Portrait.width, 220 / this.p2Portrait.height);
     if (this.p2Confirmed) {
       p2SBg.fillStyle(0x0038A8, 0.95);
       p2SBg.fillRoundedRect(40, 95, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0xffffff, 0.8);
       p2SBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p2StatusTxt.setText('READY!').setColor('#FFF');
-      this.p2Portrait.setScale(0.75);
+      this.p2Portrait.setScale(p2Scale * 1.08);
     } else {
       p2SBg.fillStyle(0x13131a, 0.8);
       p2SBg.fillRoundedRect(40, 95, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0x444, 0.5);
       p2SBg.strokeRoundedRect(40, 95, 200, 30, 4);
       this.p2StatusTxt.setText(!this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#FFC300');
-      this.p2Portrait.setScale(0.7);
+      this.p2Portrait.setScale(p2Scale);
     }
   }
 
