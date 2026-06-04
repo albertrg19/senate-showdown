@@ -63,24 +63,51 @@ export class BootScene extends Phaser.Scene {
     // Load character assets
     this.load.image('robin_face', 'assets/characters/robin_face.jpg');
     this.load.image('kiko_face', 'assets/characters/kiko_face.png');
+    this.load.image('bam_face', 'assets/characters/bam_face.png');
+    this.load.image('alan_face', 'assets/characters/alan_face.png');
+    this.load.image('bato_face', 'assets/characters/bato_face.png');
+    this.load.image('raffy_face', 'assets/characters/raffy_face.png');
+    this.load.image('risa_face', 'assets/characters/risa_face.png');
+
     this.load.image('robin_portrait', 'assets/characters/robin_portrait.png');
     this.load.image('kiko_portrait', 'assets/characters/kiko_portrait.png');
+    this.load.image('bam_portrait', 'assets/characters/bam_portrait.png');
+    this.load.image('alan_portrait', 'assets/characters/alan_portrait.png');
+    this.load.image('bato_portrait', 'assets/characters/bato_portrait.png');
+    this.load.image('raffy_portrait', 'assets/characters/raffy_portrait.png');
+    this.load.image('risa_portrait', 'assets/characters/risa_portrait.png');
+
     this.load.image('vs_screen', 'assets/vs_screen.png');
     this.load.image('senate_hall', 'assets/stage/senate_hall.png');
 
     // Load raw spritesheets with cache busting to bypass browser cache
     this.load.image('robin_pixel_raw', 'assets/characters/robin_pixel.png?cb=' + Date.now());
     this.load.image('kiko_pixel_raw', 'assets/characters/kiko_pixel.png?cb=' + Date.now());
+    this.load.image('bam_pixel_raw', 'assets/characters/bam_pixel.png?cb=' + Date.now());
+    this.load.image('alan_pixel_raw', 'assets/characters/alan_pixel.png?cb=' + Date.now());
+    this.load.image('bato_pixel_raw', 'assets/characters/bato_pixel.png?cb=' + Date.now());
+    this.load.image('raffy_pixel_raw', 'assets/characters/raffy_pixel.png?cb=' + Date.now());
+    this.load.image('risa_pixel_raw', 'assets/characters/risa_pixel.png?cb=' + Date.now());
   }
 
   create() {
     // Generate gorgeous retro pixelated faces from high-quality photographs dynamically
     this.pixelateTexture('robin_face', 'robin_face_pixel', 10);
     this.pixelateTexture('kiko_face', 'kiko_face_pixel', 10);
+    this.pixelateTexture('bam_face', 'bam_face_pixel', 10);
+    this.pixelateTexture('alan_face', 'alan_face_pixel', 10);
+    this.pixelateTexture('bato_face', 'bato_face_pixel', 10);
+    this.pixelateTexture('raffy_face', 'raffy_face_pixel', 10);
+    this.pixelateTexture('risa_face', 'risa_face_pixel', 10);
 
     // Run clean transparentizer processing
     this.makeTextureTransparent('robin_pixel_raw', 'robin_pixel_clean', false);
     this.makeTextureTransparent('kiko_pixel_raw', 'kiko_pixel_clean', true);
+    this.makeTextureTransparent('bam_pixel_raw', 'bam_pixel_clean', true);
+    this.makeTextureTransparent('alan_pixel_raw', 'alan_pixel_clean', true);
+    this.makeTextureTransparent('bato_pixel_raw', 'bato_pixel_clean', false);
+    this.makeTextureTransparent('raffy_pixel_raw', 'raffy_pixel_clean', false);
+    this.makeTextureTransparent('risa_pixel_raw', 'risa_pixel_clean', true);
 
     // Transition to menu
     this.cameras.main.fadeOut(500, 0, 0, 0);

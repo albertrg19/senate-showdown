@@ -542,7 +542,8 @@ export class Fighter {
     if (this.isBlocking && this.isGrounded) {
       this.blockstunFrames = hitbox.blockstun || 10;
       this.setState(States.BLOCK_STUN);
-      this.x -= hitbox.knockback * 0.3 * (hitbox.x > this.x ? -1 : 1) * -this.facing;
+      const pushDir = (hitbox.x + (hitbox.w || 0) / 2) < this.x ? 1 : -1;
+      this.x += hitbox.knockback * 0.3 * pushDir;
       this.superMeter = Math.min(this.maxSuper, this.superMeter + 2);
 
       // Chip damage on blocked specials (Street Fighter mechanic)
@@ -588,20 +589,22 @@ export class Fighter {
       }
     }
 
+    const pushDir = (hitbox.x + (hitbox.w || 0) / 2) < this.x ? 1 : -1;
+
     if (hitbox.launch) {
       this.velY = -500;
-      this.velX = hitbox.knockback * -this.facing;
+      this.velX = hitbox.knockback * pushDir;
       this.isGrounded = false;
       this.setState(States.KNOCKDOWN);
     } else if (hitbox.knockback > 200) {
       this.setState(States.KNOCKDOWN);
-      this.velX = hitbox.knockback * -this.facing * 0.5;
+      this.velX = hitbox.knockback * pushDir * 0.5;
       this.velY = -300;
       this.isGrounded = false;
     } else {
       this.hitstunFrames = hitbox.hitstun || 15;
       this.setState(States.HIT_STUN);
-      this.x -= hitbox.knockback * 0.5 * -this.facing;
+      this.x += hitbox.knockback * 0.5 * pushDir;
     }
 
     return 'hit';

@@ -12,7 +12,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     this.conn = this.registry.get('p2pConnection');
     this.isHost = this.registry.get('isHost'); // Host controls P1, Challenger controls P2
 
-    // Define 2x3 Grid Slots
+    // Define 2x5 Grid Slots
     this.characters = [
       {
         id: 'robin',
@@ -34,6 +34,61 @@ export class OnlineCharSelectScene extends Phaser.Scene {
         portraitKey: 'kiko_portrait',
         faceKey: 'kiko_face_pixel',
         stats: { pwr: 6, spd: 6, def: 8, spc: 9 },
+        locked: false
+      },
+      {
+        id: 'bam',
+        name: 'Bam Aquino',
+        title: 'THE MILLENNIAL SENATOR',
+        subtitle: 'Para sa Bayan, Go Bam!',
+        color: 0xFFD700,
+        portraitKey: 'bam_portrait',
+        faceKey: 'bam_face_pixel',
+        stats: { pwr: 6, spd: 7, def: 6, spc: 8 },
+        locked: false
+      },
+      {
+        id: 'alan',
+        name: 'Alan Peter Cayetano',
+        title: 'THE COMPASSIONATE LEADER',
+        subtitle: 'Aksyon, hindi salita',
+        color: 0x0056A8,
+        portraitKey: 'alan_portrait',
+        faceKey: 'alan_face_pixel',
+        stats: { pwr: 7, spd: 6, def: 7, spc: 8 },
+        locked: false
+      },
+      {
+        id: 'bato',
+        name: 'Bato Dela Rosa',
+        title: 'THE GRAV-CRUSHER',
+        subtitle: 'Rough justice is here!',
+        color: 0x555555,
+        portraitKey: 'bato_portrait',
+        faceKey: 'bato_face_pixel',
+        stats: { pwr: 9, spd: 5, def: 9, spc: 5 },
+        locked: false
+      },
+      {
+        id: 'raffy',
+        name: 'Raffy Tulfo',
+        title: 'THE ACTION MAN',
+        subtitle: 'Isumbong mo kay Tulfo!',
+        color: 0xFF6B35,
+        portraitKey: 'raffy_portrait',
+        faceKey: 'raffy_face_pixel',
+        stats: { pwr: 8, spd: 7, def: 6, spc: 8 },
+        locked: false
+      },
+      {
+        id: 'risa',
+        name: 'Risa Hontiveros',
+        title: 'THE PINK SHIELD',
+        subtitle: 'Para sa karapatan ng lahat!',
+        color: 0xFF69B4,
+        portraitKey: 'risa_portrait',
+        faceKey: 'risa_face_pixel',
+        stats: { pwr: 6, spd: 8, def: 7, spc: 9 },
         locked: false
       },
       {
@@ -59,17 +114,6 @@ export class OnlineCharSelectScene extends Phaser.Scene {
         locked: true
       },
       {
-        id: 'bato',
-        name: 'Bato Dela Rosa',
-        title: 'THE ROUGH JUSTICE',
-        subtitle: '🔒 LOCKED CHARACTER',
-        color: 0x888888,
-        portraitKey: 'robin_portrait',
-        faceKey: 'lock_box',
-        stats: { pwr: 8, spd: 5, def: 9, spc: 6 },
-        locked: true
-      },
-      {
         id: 'random',
         name: 'RANDOM SELECT',
         title: 'DECIDE BY DESTINY',
@@ -82,12 +126,12 @@ export class OnlineCharSelectScene extends Phaser.Scene {
       }
     ];
 
-    // Grid Positions calculation (2 rows, 3 columns)
-    this.gridCols = 3;
+    // Grid Positions calculation (2 rows, 5 columns)
+    this.gridCols = 5;
     this.gridRows = 2;
-    this.cellW = 85;
-    this.cellH = 85;
-    this.cellSpacing = 16;
+    this.cellW = 70;
+    this.cellH = 70;
+    this.cellSpacing = 10;
     
     // Grid center: X = 480, Y = 310
     this.gridStartX = GAME_WIDTH / 2 - ((this.cellW * this.gridCols) + (this.cellSpacing * (this.gridCols - 1))) / 2 + this.cellW / 2;
@@ -108,7 +152,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
       delay: 120,
       loop: true,
       callback: () => {
-        this.randomCycleIndex = (this.randomCycleIndex + 1) % 2;
+        this.randomCycleIndex = (this.randomCycleIndex + 1) % 7;
         this.updatePanels();
       }
     });
@@ -254,16 +298,16 @@ export class OnlineCharSelectScene extends Phaser.Scene {
         cellContainer.add(lock);
 
         // Name Tag
-        const tag = this.add.text(0, this.cellH / 2 - 12, char.name.split(' ')[1].toUpperCase(), {
-          fontFamily: 'Rajdhani', fontSize: '10px', color: '#666', fontStyle: 'bold'
+        const tag = this.add.text(0, this.cellH / 2 - 10, char.name.split(' ')[1].toUpperCase(), {
+          fontFamily: 'Rajdhani', fontSize: '9px', color: '#666', fontStyle: 'bold'
         }).setOrigin(0.5);
         cellContainer.add(tag);
       } else if (char.id === 'random') {
-        const qText = this.add.text(0, -5, '?', {
-          fontFamily: 'Orbitron', fontSize: '38px', fontStyle: 'bold', color: '#00FFCC'
+        const qText = this.add.text(0, -6, '?', {
+          fontFamily: 'Orbitron', fontSize: '28px', fontStyle: 'bold', color: '#00FFCC'
         }).setOrigin(0.5);
-        const tag = this.add.text(0, this.cellH / 2 - 12, 'RANDOM', {
-          fontFamily: 'Rajdhani', fontSize: '10px', color: '#00FFCC', fontStyle: 'bold'
+        const tag = this.add.text(0, this.cellH / 2 - 10, 'RANDOM', {
+          fontFamily: 'Rajdhani', fontSize: '9px', color: '#00FFCC', fontStyle: 'bold'
         }).setOrigin(0.5);
         cellContainer.add([qText, tag]);
 
@@ -276,11 +320,11 @@ export class OnlineCharSelectScene extends Phaser.Scene {
         });
       } else {
         const faceImg = this.add.image(0, -8, char.faceKey);
-        faceImg.setDisplaySize(this.cellW - 12, this.cellH - 28);
+        faceImg.setDisplaySize(this.cellW - 10, this.cellH - 24);
         faceImg.setOrigin(0.5);
 
-        const tag = this.add.text(0, this.cellH / 2 - 12, char.name.split(' ')[1].toUpperCase(), {
-          fontFamily: 'Rajdhani', fontSize: '11px', color: '#FFF', fontStyle: 'bold'
+        const tag = this.add.text(0, this.cellH / 2 - 10, char.name.split(' ')[1].toUpperCase(), {
+          fontFamily: 'Rajdhani', fontSize: '9px', color: '#FFF', fontStyle: 'bold'
         }).setOrigin(0.5);
         cellContainer.add([faceImg, tag]);
       }
@@ -334,7 +378,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
 
     // P1 Status Tag
     this.p1StatusBg = this.add.graphics();
-    this.p1StatusTxt = this.add.text(130, -25, 'SELECTING', {
+    this.p1StatusTxt = this.add.text(130, 445, 'SELECTING', {
       fontFamily: 'Orbitron', fontSize: '16px', fontStyle: 'bold', color: '#FFF'
     }).setOrigin(0.5);
     this.p1Panel.add([this.p1StatusBg, this.p1StatusTxt]);
@@ -366,7 +410,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
 
     // P2 Status Tag
     this.p2StatusBg = this.add.graphics();
-    this.p2StatusTxt = this.add.text(130, -25, 'SELECTING', {
+    this.p2StatusTxt = this.add.text(130, 445, 'SELECTING', {
       fontFamily: 'Orbitron', fontSize: '16px', fontStyle: 'bold', color: '#FFF'
     }).setOrigin(0.5);
     this.p2Panel.add([this.p2StatusBg, this.p2StatusTxt]);
@@ -376,7 +420,7 @@ export class OnlineCharSelectScene extends Phaser.Scene {
   updatePanels() {
     // ── P1 Panel ──
     let p1Char = this.characters[this.p1Selection];
-    if (this.p1Selection === 5 && !this.p1Confirmed) {
+    if (this.p1Selection === 9 && !this.p1Confirmed) {
       p1Char = this.characters[this.randomCycleIndex];
     }
 
@@ -425,23 +469,25 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     const p1Scale = Math.min(230 / this.p1Portrait.width, 220 / this.p1Portrait.height);
     if (this.p1Confirmed) {
       p1SBg.fillStyle(0xE63946, 0.95);
-      p1SBg.fillRoundedRect(30, -40, 200, 30, 4);
+      p1SBg.fillRoundedRect(30, 430, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0xffffff, 0.8);
-      p1SBg.strokeRoundedRect(30, -40, 200, 30, 4);
+      p1SBg.strokeRoundedRect(30, 430, 200, 30, 4);
       this.p1StatusTxt.setText('READY!').setColor('#FFF');
+      this.p1StatusTxt.setPosition(130, 445);
       this.p1Portrait.setScale(p1Scale * 1.08);
     } else {
       p1SBg.fillStyle(0x13131a, 0.8);
-      p1SBg.fillRoundedRect(30, -40, 200, 30, 4);
+      p1SBg.fillRoundedRect(30, 430, 200, 30, 4);
       p1SBg.lineStyle(1.5, 0x444, 0.5);
-      p1SBg.strokeRoundedRect(30, -40, 200, 30, 4);
+      p1SBg.strokeRoundedRect(30, 430, 200, 30, 4);
       this.p1StatusTxt.setText(this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#E63946');
+      this.p1StatusTxt.setPosition(130, 445);
       this.p1Portrait.setScale(p1Scale);
     }
 
     // ── P2 Panel ──
     let p2Char = this.characters[this.p2Selection];
-    if (this.p2Selection === 5 && !this.p2Confirmed) {
+    if (this.p2Selection === 9 && !this.p2Confirmed) {
       p2Char = this.characters[this.randomCycleIndex];
     }
 
@@ -489,17 +535,19 @@ export class OnlineCharSelectScene extends Phaser.Scene {
     const p2Scale = Math.min(230 / this.p2Portrait.width, 220 / this.p2Portrait.height);
     if (this.p2Confirmed) {
       p2SBg.fillStyle(0x0038A8, 0.95);
-      p2SBg.fillRoundedRect(30, -40, 200, 30, 4);
+      p2SBg.fillRoundedRect(30, 430, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0xffffff, 0.8);
-      p2SBg.strokeRoundedRect(30, -40, 200, 30, 4);
+      p2SBg.strokeRoundedRect(30, 430, 200, 30, 4);
       this.p2StatusTxt.setText('READY!').setColor('#FFF');
+      this.p2StatusTxt.setPosition(130, 445);
       this.p2Portrait.setScale(p2Scale * 1.08);
     } else {
       p2SBg.fillStyle(0x13131a, 0.8);
-      p2SBg.fillRoundedRect(30, -40, 200, 30, 4);
+      p2SBg.fillRoundedRect(30, 430, 200, 30, 4);
       p2SBg.lineStyle(1.5, 0x444, 0.5);
-      p2SBg.strokeRoundedRect(30, -40, 200, 30, 4);
+      p2SBg.strokeRoundedRect(30, 430, 200, 30, 4);
       this.p2StatusTxt.setText(!this.isHost ? 'YOUR TURN' : 'SELECTING').setColor('#FFC300');
+      this.p2StatusTxt.setPosition(130, 445);
       this.p2Portrait.setScale(p2Scale);
     }
   }
@@ -528,13 +576,15 @@ export class OnlineCharSelectScene extends Phaser.Scene {
 
     if (this.isHost) {
       this.p1Confirmed = true;
-      if (this.p1Selection === 5) {
-        this.p1Selection = Math.random() < 0.5 ? 0 : 1;
+      if (this.p1Selection === 9) {
+        const playables = [0, 1, 2, 3, 4, 5, 6];
+        this.p1Selection = playables[Math.floor(Math.random() * playables.length)];
       }
     } else {
       this.p2Confirmed = true;
-      if (this.p2Selection === 5) {
-        this.p2Selection = Math.random() < 0.5 ? 0 : 1;
+      if (this.p2Selection === 9) {
+        const playables = [0, 1, 2, 3, 4, 5, 6];
+        this.p2Selection = playables[Math.floor(Math.random() * playables.length)];
       }
     }
 

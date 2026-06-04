@@ -14,41 +14,26 @@ export class FighterRenderer {
 
   createAnimations() {
     const scene = this.scene;
+    const characters = ['robin', 'kiko', 'bam', 'alan', 'bato', 'raffy', 'risa'];
 
-    // ─── New 5-row layout (Math.floor frameHeight=204, all 40 frames accessible) ───
-    // Row 0 (0-7):   Idle stance
-    // Row 1 (8-15):  Walk forward
-    // Row 2 (16-23): Punch attack
-    // Row 3 (24-31): Kick attack
-    // Row 4 (32-39): Jump(32-33) | Hurt(34-35) | Knockdown(36-37) | Victory(38-39)
-
-    // ── Robin Padilla ──────────────────────────────────────────────────────
-    if (!scene.anims.exists('robin_idle')) {
-      scene.anims.create({ key: 'robin_idle',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 0,  end: 7  }), frameRate: 6,  repeat: -1 });
-      scene.anims.create({ key: 'robin_walk',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 8,  end: 15 }), frameRate: 8,  repeat: -1 });
-      scene.anims.create({ key: 'robin_punch',   frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 16, end: 23 }), frameRate: 14, repeat: 0  });
-      scene.anims.create({ key: 'robin_kick',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 24, end: 31 }), frameRate: 14, repeat: 0  });
-      scene.anims.create({ key: 'robin_jump',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 32, end: 33 }), frameRate: 6,  repeat: -1 });
-      scene.anims.create({ key: 'robin_hurt',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 34, end: 35 }), frameRate: 10, repeat: 0  });
-      scene.anims.create({ key: 'robin_down',    frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 36, end: 37 }), frameRate: 6,  repeat: 0  });
-      scene.anims.create({ key: 'robin_victory', frames: scene.anims.generateFrameNumbers('robin_pixel_clean_sheet', { start: 38, end: 39 }), frameRate: 4,  repeat: -1 });
-    }
-
-    // ── Kiko Pangilinan ────────────────────────────────────────────────────
-    if (!scene.anims.exists('kiko_idle')) {
-      scene.anims.create({ key: 'kiko_idle',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 0,  end: 7  }), frameRate: 6,  repeat: -1 });
-      scene.anims.create({ key: 'kiko_walk',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 8,  end: 15 }), frameRate: 8,  repeat: -1 });
-      scene.anims.create({ key: 'kiko_punch',   frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 16, end: 23 }), frameRate: 14, repeat: 0  });
-      scene.anims.create({ key: 'kiko_kick',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 24, end: 31 }), frameRate: 14, repeat: 0  });
-      scene.anims.create({ key: 'kiko_jump',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 32, end: 33 }), frameRate: 6,  repeat: -1 });
-      scene.anims.create({ key: 'kiko_hurt',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 34, end: 35 }), frameRate: 10, repeat: 0  });
-      scene.anims.create({ key: 'kiko_down',    frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 36, end: 37 }), frameRate: 6,  repeat: 0  });
-      scene.anims.create({ key: 'kiko_victory', frames: scene.anims.generateFrameNumbers('kiko_pixel_clean_sheet', { start: 38, end: 39 }), frameRate: 4,  repeat: -1 });
-    }
+    characters.forEach(char => {
+      const sheetKey = `${char}_pixel_clean_sheet`;
+      if (!scene.anims.exists(`${char}_idle`)) {
+        scene.anims.create({ key: `${char}_idle`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 0,  end: 7  }), frameRate: 6,  repeat: -1 });
+        scene.anims.create({ key: `${char}_walk`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 8,  end: 15 }), frameRate: 8,  repeat: -1 });
+        scene.anims.create({ key: `${char}_punch`,   frames: scene.anims.generateFrameNumbers(sheetKey, { start: 16, end: 23 }), frameRate: 14, repeat: 0  });
+        scene.anims.create({ key: `${char}_kick`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 24, end: 31 }), frameRate: 14, repeat: 0  });
+        scene.anims.create({ key: `${char}_jump`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 32, end: 33 }), frameRate: 6,  repeat: -1 });
+        scene.anims.create({ key: `${char}_hurt`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 34, end: 35 }), frameRate: 10, repeat: 0  });
+        scene.anims.create({ key: `${char}_down`,    frames: scene.anims.generateFrameNumbers(sheetKey, { start: 36, end: 37 }), frameRate: 6,  repeat: 0  });
+        scene.anims.create({ key: `${char}_victory`, frames: scene.anims.generateFrameNumbers(sheetKey, { start: 38, end: 39 }), frameRate: 4,  repeat: -1 });
+      }
+    });
   }
 
   createFaceSprite(fighter, textureKey) {
-    const sheetKey = fighter.name === 'Robin Padilla' ? 'robin_pixel_clean_sheet' : 'kiko_pixel_clean_sheet';
+    const faceKey = fighter.data.faceKey || 'robin_face';
+    const sheetKey = faceKey.replace('_face', '_pixel_clean_sheet');
 
     // Create 16-bit retro arcade sprite anchored at bottom-center (offset to 0.87 to account for transparency padding)
     const sprite = this.scene.add.sprite(fighter.x, fighter.y, sheetKey);
@@ -70,7 +55,8 @@ export class FighterRenderer {
     sprite.setFlipX(facing === -1);
 
     // Map fighter state to Phaser anims
-    const prefix = fighter.name === 'Robin Padilla' ? 'robin_' : 'kiko_';
+    const faceKey = fighter.data.faceKey || 'robin_face';
+    const prefix = faceKey.replace('_face', '_');
     // ── Map Fighter state → animation key ─────────────────────────────────
     let animKey = prefix + 'idle'; // safe default
 

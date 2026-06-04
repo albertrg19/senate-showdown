@@ -115,18 +115,18 @@ export class InputManager {
       hk:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.K),   // Heavy Kick
     };
 
-    // Player 2: Arrow keys + Numpad 6-button layout
+    // Player 2: Arrow keys + Numpad 6-button layout with standard number keys as fallbacks
     this.keys.p2 = {
       left:  kb.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
       right: kb.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
       up:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.UP),
       down:  kb.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN),
-      lp:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN), // Light Punch
-      mp:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE),  // Medium Punch
-      hp:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT), // Heavy Punch
-      lk:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR),  // Light Kick
-      mk:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX),   // Medium Kick
-      hk:    kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE),  // Heavy Kick
+      lp:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SEVEN), kb.addKey(Phaser.Input.Keyboard.KeyCodes.SEVEN)], // Light Punch
+      mp:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_NINE), kb.addKey(Phaser.Input.Keyboard.KeyCodes.NINE)],  // Medium Punch
+      hp:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_EIGHT), kb.addKey(Phaser.Input.Keyboard.KeyCodes.EIGHT)], // Heavy Punch
+      lk:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR), kb.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR)],  // Light Kick
+      mk:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_SIX), kb.addKey(Phaser.Input.Keyboard.KeyCodes.SIX)],   // Medium Kick
+      hk:    [kb.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FIVE), kb.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE)],  // Heavy Kick
     };
   }
 
@@ -245,21 +245,33 @@ export class InputManager {
     const parser = this.motionParsers[player];
     const JustDown = Phaser.Input.Keyboard.JustDown;
 
+    const isDown = (key) => {
+      if (!key) return false;
+      if (Array.isArray(key)) return key.some(kbKey => kbKey.isDown);
+      return key.isDown;
+    };
+
+    const isJustDown = (key) => {
+      if (!key) return false;
+      if (Array.isArray(key)) return key.some(kbKey => JustDown(kbKey));
+      return JustDown(key);
+    };
+
     let input;
 
     // Combine virtual controls input for P1 if active
     if (player === 'p1' && this.virtualControlsActive) {
       input = {
-        left:  this.virtualInput.left || (k && k.left.isDown),
-        right: this.virtualInput.right || (k && k.right.isDown),
-        up:    this.virtualInput.up || (k && JustDown(k.up)),
-        down:  this.virtualInput.down || (k && k.down.isDown),
-        lp:    this.virtualInput.lp || (k && JustDown(k.lp)),
-        mp:    this.virtualInput.mp || (k && JustDown(k.mp)),
-        hp:    this.virtualInput.hp || (k && JustDown(k.hp)),
-        lk:    this.virtualInput.lk || (k && JustDown(k.lk)),
-        mk:    this.virtualInput.mk || (k && JustDown(k.mk)),
-        hk:    this.virtualInput.hk || (k && JustDown(k.hk)),
+        left:  this.virtualInput.left || (k && isDown(k.left)),
+        right: this.virtualInput.right || (k && isDown(k.right)),
+        up:    this.virtualInput.up || (k && isJustDown(k.up)),
+        down:  this.virtualInput.down || (k && isDown(k.down)),
+        lp:    this.virtualInput.lp || (k && isJustDown(k.lp)),
+        mp:    this.virtualInput.mp || (k && isJustDown(k.mp)),
+        hp:    this.virtualInput.hp || (k && isJustDown(k.hp)),
+        lk:    this.virtualInput.lk || (k && isJustDown(k.lk)),
+        mk:    this.virtualInput.mk || (k && isJustDown(k.mk)),
+        hk:    this.virtualInput.hk || (k && isJustDown(k.hk)),
         // Direct mobile touch special keys
         superMove: this.virtualInput.superMove,
         special1:  this.virtualInput.special1,
@@ -290,18 +302,18 @@ export class InputManager {
     } else {
       // Standard keyboard controls
       input = {
-        left:  k ? k.left.isDown : false,
-        right: k ? k.right.isDown : false,
-        up:    k ? JustDown(k.up) : false,
-        down:  k ? k.down.isDown : false,
-        lp:    k ? JustDown(k.lp) : false,
-        mp:    k ? JustDown(k.mp) : false,
-        hp:    k ? JustDown(k.hp) : false,
-        lk:    k ? JustDown(k.lk) : false,
-        mk:    k ? JustDown(k.mk) : false,
-        hk:    k ? JustDown(k.hk) : false,
-        forward:  k ? (facing === 1 ? k.right.isDown : k.left.isDown) : false,
-        backward: k ? (facing === 1 ? k.left.isDown  : k.right.isDown) : false,
+        left:  k ? isDown(k.left) : false,
+        right: k ? isDown(k.right) : false,
+        up:    k ? isJustDown(k.up) : false,
+        down:  k ? isDown(k.down) : false,
+        lp:    k ? isJustDown(k.lp) : false,
+        mp:    k ? isJustDown(k.mp) : false,
+        hp:    k ? isJustDown(k.hp) : false,
+        lk:    k ? isJustDown(k.lk) : false,
+        mk:    k ? isJustDown(k.mk) : false,
+        hk:    k ? isJustDown(k.hk) : false,
+        forward:  k ? (facing === 1 ? isDown(k.right) : isDown(k.left)) : false,
+        backward: k ? (facing === 1 ? isDown(k.left)  : isDown(k.right)) : false,
         superMove: false,
         special1: false,
         special2: false,

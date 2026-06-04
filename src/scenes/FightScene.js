@@ -3,6 +3,11 @@ import { GAME_WIDTH, GAME_HEIGHT, GROUND_Y, ROUND_TIME, ROUNDS_TO_WIN } from '..
 import { Fighter, States } from '../fighters/Fighter.js';
 import { RobinPadillaData } from '../fighters/characters/RobinPadilla.js';
 import { KikoPangilinanData } from '../fighters/characters/KikoPangilinan.js';
+import { BamAquinoData } from '../fighters/characters/BamAquino.js';
+import { AlanCayetanoData } from '../fighters/characters/AlanCayetano.js';
+import { BatoDelaRosaData } from '../fighters/characters/BatoDelaRosa.js';
+import { RaffyTulfoData } from '../fighters/characters/RaffyTulfo.js';
+import { RisaHontiverosData } from '../fighters/characters/RisaHontiveros.js';
 import { InputManager } from '../input/InputManager.js';
 import { FighterRenderer } from '../rendering/FighterRenderer.js';
 import { StageRenderer } from '../rendering/StageRenderer.js';
@@ -12,7 +17,12 @@ import { AIController } from '../fighters/AIController.js';
 
 const CHARACTER_DATA = {
   robin: RobinPadillaData,
-  kiko:  KikoPangilinanData
+  kiko:  KikoPangilinanData,
+  bam:   BamAquinoData,
+  alan:  AlanCayetanoData,
+  bato:  BatoDelaRosaData,
+  raffy: RaffyTulfoData,
+  risa:  RisaHontiverosData
 };
 
 // Only 3 game states — the game loop NEVER pauses during combat.

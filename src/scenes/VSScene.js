@@ -1,5 +1,12 @@
 import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT } from '../main.js';
+import { RobinPadillaData } from '../fighters/characters/RobinPadilla.js';
+import { KikoPangilinanData } from '../fighters/characters/KikoPangilinan.js';
+import { BamAquinoData } from '../fighters/characters/BamAquino.js';
+import { AlanCayetanoData } from '../fighters/characters/AlanCayetano.js';
+import { BatoDelaRosaData } from '../fighters/characters/BatoDelaRosa.js';
+import { RaffyTulfoData } from '../fighters/characters/RaffyTulfo.js';
+import { RisaHontiverosData } from '../fighters/characters/RisaHontiveros.js';
 
 export class VSScene extends Phaser.Scene {
   constructor() {
@@ -16,18 +23,46 @@ export class VSScene extends Phaser.Scene {
 
     const charDetails = {
       robin: {
-        name: 'ROBIN PADILLA',
-        title: 'THE BAD BOY',
-        hexColor: 0xE63946,
-        cssColor: '#E63946',
-        portrait: 'robin_portrait',
+        name: RobinPadillaData.name.toUpperCase(),
+        title: RobinPadillaData.title.toUpperCase(),
+        hexColor: RobinPadillaData.energyColor,
+        portrait: RobinPadillaData.portraitKey,
       },
       kiko: {
-        name: 'KIKO PANGILINAN',
-        title: 'THE POLICY WARRIOR',
-        hexColor: 0xFFC300,
-        cssColor: '#FFC300',
-        portrait: 'kiko_portrait',
+        name: KikoPangilinanData.name.toUpperCase(),
+        title: KikoPangilinanData.title.toUpperCase(),
+        hexColor: KikoPangilinanData.energyColor,
+        portrait: KikoPangilinanData.portraitKey,
+      },
+      bam: {
+        name: BamAquinoData.name.toUpperCase(),
+        title: BamAquinoData.title.toUpperCase(),
+        hexColor: BamAquinoData.energyColor,
+        portrait: BamAquinoData.portraitKey,
+      },
+      alan: {
+        name: AlanCayetanoData.name.toUpperCase(),
+        title: AlanCayetanoData.title.toUpperCase(),
+        hexColor: AlanCayetanoData.energyColor,
+        portrait: AlanCayetanoData.portraitKey,
+      },
+      bato: {
+        name: BatoDelaRosaData.name.toUpperCase(),
+        title: BatoDelaRosaData.title.toUpperCase(),
+        hexColor: BatoDelaRosaData.energyColor,
+        portrait: BatoDelaRosaData.portraitKey,
+      },
+      raffy: {
+        name: RaffyTulfoData.name.toUpperCase(),
+        title: RaffyTulfoData.title.toUpperCase(),
+        hexColor: RaffyTulfoData.energyColor,
+        portrait: RaffyTulfoData.portraitKey,
+      },
+      risa: {
+        name: RisaHontiverosData.name.toUpperCase(),
+        title: RisaHontiverosData.title.toUpperCase(),
+        hexColor: RisaHontiverosData.energyColor,
+        portrait: RisaHontiverosData.portraitKey,
       }
     };
 
