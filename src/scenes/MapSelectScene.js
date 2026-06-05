@@ -108,6 +108,48 @@ export class MapSelectScene extends Phaser.Scene {
 
       container.bg = cardBg;
       container.txt = nameTxt;
+
+      // Mouse/Touch interactivity
+      const hit = this.add.zone(0, 0, this.cardWidth, this.cardHeight).setInteractive({ useHandCursor: true });
+      container.add(hit);
+
+      hit.on('pointerover', (pointer) => {
+        if (pointer.wasTouch || (pointer.event && pointer.event.pointerType === 'touch')) return;
+        if (!this.confirmed && (this.gameMode !== 'online' || this.isHost)) {
+          if (this.selectedIndex !== i) {
+            this.selectedIndex = i;
+            this.updateHighlight();
+            if (this.sound_mgr) this.sound_mgr.playMenuSelect();
+
+            if (this.gameMode === 'online' && this.conn && this.conn.open) {
+              this.conn.send({
+                type: 'stage_highlight',
+                index: this.selectedIndex
+              });
+            }
+          }
+        }
+      });
+
+      hit.on('pointerdown', () => {
+        if (!this.confirmed && (this.gameMode !== 'online' || this.isHost)) {
+          if (this.selectedIndex === i) {
+            this.confirmSelection();
+          } else {
+            this.selectedIndex = i;
+            this.updateHighlight();
+            if (this.sound_mgr) this.sound_mgr.playMenuSelect();
+
+            if (this.gameMode === 'online' && this.conn && this.conn.open) {
+              this.conn.send({
+                type: 'stage_highlight',
+                index: this.selectedIndex
+              });
+            }
+          }
+        }
+      });
+
       this.cardContainers.push(container);
     });
 
