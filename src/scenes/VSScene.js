@@ -366,6 +366,22 @@ export class VSScene extends Phaser.Scene {
     flagBar.fillStyle(0xFCD116, 0.7);
     flagBar.fillRect(GAME_WIDTH * 2 / 3, GAME_HEIGHT - 5, GAME_WIDTH / 3, 5);
 
+    // Render selected stage name at bottom
+    const selectedStageKey = this.registry.get('selectedStage') || 'senate_hall';
+    const stageNames = {
+      senate_hall: 'SENATE SESSION HALL',
+      the_ruins: 'THE RUINS MANSION',
+      bohol: 'CHOCOLATE HILLS',
+      ifugao: 'IFUGAO RICE TERRACES',
+      albay: 'MAYON VOLCANO RUINS'
+    };
+    const stageName = stageNames[selectedStageKey] || 'SENATE SESSION HALL';
+
+    this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 32, `STAGE: ${stageName}`, {
+      fontFamily: 'Orbitron', fontSize: '13px', color: '#FFF', fontStyle: 'bold',
+      stroke: '#000', strokeThickness: 3, letterSpacing: 2
+    }).setOrigin(0.5).setDepth(7);
+
     // ── Auto-transition to FightScene ──
     this.time.delayedCall(3000, () => {
       // Final dramatic flash before fight

@@ -1,7 +1,7 @@
 import { GAME_WIDTH, GAME_HEIGHT, GROUND_Y } from '../main.js';
 
 export class StageRenderer {
-  constructor(scene) {
+  constructor(scene, stageKey = 'senate_hall') {
     this.scene = scene;
     this.graphics = scene.add.graphics();
     this.bgGraphics = scene.add.graphics();
@@ -10,8 +10,8 @@ export class StageRenderer {
     this.time = 0;
 
     // Load static image background if available
-    if (scene.textures.exists('senate_hall')) {
-      this.bgSprite = scene.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'senate_hall');
+    if (scene.textures.exists(stageKey)) {
+      this.bgSprite = scene.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, stageKey);
       this.bgSprite.setDisplaySize(GAME_WIDTH, GAME_HEIGHT);
       this.bgSprite.setDepth(-15);
     }
@@ -75,28 +75,7 @@ export class StageRenderer {
       g.fillRect(cx - columnWidth / 2 - 5, GROUND_Y - 10, columnWidth + 10, 10);
     }
 
-    // Philippine flag in center background
-    const flagX = GAME_WIDTH / 2 - 40;
-    const flagY = 80;
-    const flagW = 80;
-    const flagH = 45;
-
-    // Flag pole
-    g.fillStyle(0x8B7355, 0.5);
-    g.fillRect(GAME_WIDTH / 2, 30, 3, 100);
-
-    // Blue stripe
-    g.fillStyle(0x0038A8, 0.3);
-    g.fillRect(flagX, flagY, flagW, flagH / 2);
-    // Red stripe
-    g.fillStyle(0xCE1126, 0.3);
-    g.fillRect(flagX, flagY + flagH / 2, flagW, flagH / 2);
-    // White triangle
-    g.fillStyle(0xFFFFFF, 0.2);
-    g.fillTriangle(flagX, flagY, flagX, flagY + flagH, flagX + flagW * 0.4, flagY + flagH / 2);
-    // Sun (simplified)
-    g.fillStyle(0xFCD116, 0.3);
-    g.fillCircle(flagX + 15, flagY + flagH / 2, 5);
+    // No flag drawn in center background to ensure a clean legal presentation
 
     // Arch/dome at top center
     g.lineStyle(2, 0x2a2035, 0.4);

@@ -79,6 +79,10 @@ export class BootScene extends Phaser.Scene {
 
     this.load.image('vs_screen', 'assets/vs_screen.png');
     this.load.image('senate_hall', 'assets/stage/senate_hall.png');
+    this.load.image('the_ruins', 'assets/stage/the_ruins.png');
+    this.load.image('bohol', 'assets/stage/bohol.png');
+    this.load.image('ifugao', 'assets/stage/ifugao.png');
+    this.load.image('albay', 'assets/stage/albay.png');
 
     // Load raw spritesheets with cache busting to bypass browser cache
     this.load.image('robin_pixel_raw', 'assets/characters/robin_pixel.png?cb=' + Date.now());

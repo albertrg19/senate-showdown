@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene.js';
 import { MenuScene } from './scenes/MenuScene.js';
 import { CharacterSelectScene } from './scenes/CharacterSelectScene.js';
+import { MapSelectScene } from './scenes/MapSelectScene.js';
 import { FightScene } from './scenes/FightScene.js';
 import { VictoryScene } from './scenes/VictoryScene.js';
 import { LobbyScene } from './scenes/LobbyScene.js';
@@ -25,7 +26,7 @@ const config = {
       debug: false
     }
   },
-  scene: [BootScene, MenuScene, CharacterSelectScene, VSScene, FightScene, VictoryScene, LobbyScene, OnlineCharSelectScene],
+  scene: [BootScene, MenuScene, CharacterSelectScene, MapSelectScene, VSScene, FightScene, VictoryScene, LobbyScene, OnlineCharSelectScene],
   render: {
     pixelArt: false,
     antialias: true

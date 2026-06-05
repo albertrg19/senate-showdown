@@ -715,7 +715,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         duration: 150,
         yoyo: true,
         onComplete: () => {
-          this.scene.start('VSScene');
+          this.scene.start('MapSelectScene');
         }
       });
     }

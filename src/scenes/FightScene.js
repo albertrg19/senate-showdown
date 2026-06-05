@@ -45,7 +45,8 @@ export class FightScene extends Phaser.Scene {
 
     // Systems
     this.inputManager    = new InputManager(this);
-    this.stageRenderer   = new StageRenderer(this);
+    const selectedStage  = this.registry.get('selectedStage') || 'senate_hall';
+    this.stageRenderer   = new StageRenderer(this, selectedStage);
     this.fighterRenderer = new FighterRenderer(this);
     this.hud             = new HUD(this);
     this.particles       = new ParticleEffects(this);
